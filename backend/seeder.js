@@ -17,11 +17,11 @@ const importData = async () => {
     await Question.deleteMany();
     await Category.deleteMany();
 
-    await Category.insertMany(categories);
+   const createdCategories = await Category.insertMany(categories);
     await User.insertMany(users);
 
     const questions = data.map((quest) => {
-      return { ...quest, category: categories[0]._id };
+      return { ...quest, category: createdCategories[0]._id };
     });
 
     await Question.insertMany(questions);

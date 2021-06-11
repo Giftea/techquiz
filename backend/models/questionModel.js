@@ -19,7 +19,12 @@ const questionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    options: [{ answer: { type: String, required: true } }],
+    options: [
+        { 
+            answer: { type: String, required: true },
+            correct : {type: Boolean, required:true}
+        }
+    ],
   },
   {
     timestamps: true,
