@@ -1,25 +1,22 @@
-const questions = [
+const data = [
   {
     question: "what is my name?",
     options: [
-      { answer: "gift", correct: true },
-      { answer: "grace", correct: false },
+      { answer: "gift" },
     ],
   },
   {
     question: "what framework am i learning?",
     options: [
-      { answer: "frontend", correct: false },
-      { answer: "backend", correct: true },
+      { answer: "frontend" },
     ],
   },
   {
     question: "did i take a course on ui/ux in the past?",
     options: [
-      { answer: "yes", correct: true },
-      { answer: "no", correct: false },
+      { answer: "yes" },
     ],
   },
 ];
 
-export default questions;
+export default data;

@@ -17,14 +17,11 @@ const importData = async () => {
     await Question.deleteMany();
     await Category.deleteMany();
 
+    await Category.insertMany(categories);
     await User.insertMany(users);
 
-    const createdUsers = await User.insertMany(users);
-
-    const createdCategory = await Category.insertMany(categories);
-
-    const questions = data.map((question) => {
-      return { ...question, category: createdCategory[0]._id };
+    const questions = data.map((quest) => {
+      return { ...quest, category: categories[0]._id };
     });
 
     await Question.insertMany(questions);
@@ -43,9 +40,8 @@ const destroyData = async () => {
     await Question.deleteMany();
     await Category.deleteMany();
 
-    await User.insertMany(users);
-
     console.log("Questions destroyed");
+
     process.exit();
   } catch (error) {
     console.log(error);

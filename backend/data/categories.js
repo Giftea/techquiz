@@ -7,4 +7,4 @@ const categories = [
   { name: "Graphics Design" },
 ];
 
-export default categories
+export default categories;

@@ -13,14 +13,13 @@ const questionSchema = mongoose.Schema(
   {
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
       ref: "Category",
     },
     question: {
       type: String,
       required: true,
     },
-    options: [{ answer: String, correct: Boolean }],
+    options: [{ answer: { type: String, required: true } }],
   },
   {
     timestamps: true,
