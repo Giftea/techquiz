@@ -2,11 +2,6 @@ import mongoose from "mongoose";
 
 const questionSchema = mongoose.Schema(
   {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: "User",
-    },
     questionTitle: {
       type: String,
       required: true,
