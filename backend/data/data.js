@@ -1,6 +1,5 @@
 const questions = [
   {
-    category: "frontend",
     question: "what is my name?",
     options: [
       { answer: "gift", correct: true },
@@ -8,7 +7,6 @@ const questions = [
     ],
   },
   {
-    category: "backend",
     question: "what framework am i learning?",
     options: [
       { answer: "frontend", correct: false },
@@ -16,7 +14,6 @@ const questions = [
     ],
   },
   {
-    category: "ui/ux",
     question: "did i take a course on ui/ux in the past?",
     options: [
       { answer: "yes", correct: true },
@@ -25,4 +22,4 @@ const questions = [
   },
 ];
 
-export default questions
+export default questions;

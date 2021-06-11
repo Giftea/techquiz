@@ -2,8 +2,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import users from "./users/users.js";
 import data from "./data/data.js";
+import categories from "./data/categories.js";
 import User from "./models/userModel.js";
-import Question from "./models/questionModel.js";
+import Question, { Category } from "./models/questionModel.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -14,15 +15,16 @@ const importData = async () => {
   try {
     await User.deleteMany();
     await Question.deleteMany();
+    await Category.deleteMany();
 
     await User.insertMany(users);
 
     const createdUsers = await User.insertMany(users);
 
-    const adminUser = createdUsers[0]._id;
+    const createdCategory = await Category.insertMany(categories);
 
     const questions = data.map((question) => {
-      return { ...question, user: adminUser };
+      return { ...question, category: createdCategory[0]._id };
     });
 
     await Question.insertMany(questions);
@@ -39,6 +41,7 @@ const destroyData = async () => {
   try {
     await User.deleteMany();
     await Question.deleteMany();
+    await Category.deleteMany();
 
     await User.insertMany(users);
 

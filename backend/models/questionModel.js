@@ -6,11 +6,8 @@ const categorySchema = mongoose.Schema({
 
     required: true,
   },
-  id: {
-    type: String,
-  },
 });
-const Category = mongoose.model("Category", categorySchema);
+export const Category = mongoose.model("Category", categorySchema);
 
 const questionSchema = mongoose.Schema(
   {
