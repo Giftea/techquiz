@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import users from "./users/users.js";
 import data from "./data/data.js";
 import User from "./models/userModel.js";
-import Question from "./models/questionModel";
+import Question from "./models/questionModel.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();
@@ -22,7 +22,7 @@ const importData = async () => {
     const adminUser = createdUsers[0]._id;
 
     const questions = data.map((question) => {
-      return { ...products, user: adminUser };
+      return { ...question, user: adminUser };
     });
 
     await Question.insertMany(questions);
@@ -50,8 +50,8 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === '-d'){
-    destroyData()
+if (process.argv[2] === "-d") {
+  destroyData();
 } else {
-    importData()
+  importData();
 }

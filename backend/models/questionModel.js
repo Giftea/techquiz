@@ -12,7 +12,6 @@ const categorySchema = mongoose.Schema({
 });
 const Category = mongoose.model("Category", categorySchema);
 
-
 const questionSchema = mongoose.Schema(
   {
     category: {
