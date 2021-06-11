@@ -1,0 +1,17 @@
+{
+  "name": "techquiz.io",
+  "version": "1.0.0",
+  "description": "quiz app",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server"
+  },
+  "author": "Giftea",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.13"
+  }
+}
