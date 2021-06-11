@@ -1,36 +1,31 @@
 import mongoose from "mongoose";
 
+const categorySchema = mongoose.Schema({
+  name: {
+    type: String,
+
+    required: true,
+  },
+  id: {
+    type: String,
+    required: true,
+  },
+});
+const Category = mongoose.model("Category", categorySchema);
+
+
 const questionSchema = mongoose.Schema(
   {
-    questionTitle: {
+    category: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "Category",
+    },
+    question: {
       type: String,
       required: true,
     },
-    image: {
-      type: String,
-      required: true,
-    },
-
-    optionOne: {
-      type: String,
-      required: true,
-    },
-
-    optionTwo: {
-      type: String,
-      required: true,
-    },
-
-    optionThree: {
-      type: String,
-      required: true,
-    },
-
-    correctOption: {
-      type: String,
-      required: true,
-      unique: true,
-    },
+    options: [{ answer: String, correct: Boolean }],
   },
   {
     timestamps: true,
