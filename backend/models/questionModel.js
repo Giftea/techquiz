@@ -1,14 +1,5 @@
 import mongoose from "mongoose";
 
-const categorySchema = mongoose.Schema({
-  name: {
-    type: String,
-
-    required: true,
-  },
-});
-export const Category = mongoose.model("Category", categorySchema);
-
 const questionSchema = mongoose.Schema(
   {
     category: {
@@ -20,16 +11,16 @@ const questionSchema = mongoose.Schema(
       required: true,
     },
     options: [
-        { 
-            answer: { type: String, required: true },
-            correct : {type: Boolean, required:true}
-        }
+      {
+        answer: { type: String, required: true },
+        correct: { type: Boolean, required: true },
+      },
     ],
   },
   {
     timestamps: true,
   }
 );
-export const Question = mongoose.model("Question", questionSchema);
+const Question = mongoose.model("Question", questionSchema);
 
-
+export default Question;

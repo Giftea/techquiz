@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import users from "./users/users.js";
+import users from "./data/users.js";
 import data from "./data/data.js";
 import categories from "./data/categories.js";
 import User from "./models/userModel.js";
-import Question, { Category } from "./models/questionModel.js";
+import Question from "./models/questionModel.js";
+import Category from "./models/categoriesModel.js";
 import connectDB from "./config/db.js";
 
 dotenv.config();

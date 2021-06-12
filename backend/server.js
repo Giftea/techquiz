@@ -5,9 +5,12 @@ import expressfileupload from "express-fileupload";
 import multer from "multer";
 import mongoose from "mongoose";
 import connectDB from "./config/db.js";
-import { Question, Category } from "./models/questionModel.js";
+import  Question from "./models/questionModel.js";
+import  Category from "./models/categoriesModel.js";
 import { KeyObject } from "crypto";
 import questionRoutes from './routes/questionRoutes.js'
+import { notFound, errorHandler } from "./middleware/errorMiddleWare.js";
+
 
 dotenv.config();
 
@@ -24,6 +27,10 @@ app.get("/", (req, res) => {
 });
 
 app.use('/api/questions', questionRoutes)
+
+app.use(notFound);
+
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
