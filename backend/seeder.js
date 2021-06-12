@@ -17,7 +17,7 @@ const importData = async () => {
     await Question.deleteMany();
     await Category.deleteMany();
 
-   const createdCategories = await Category.insertMany(categories);
+    const createdCategories = await Category.insertMany(categories);
     await User.insertMany(users);
 
     const questions = data.map((quest) => {
@@ -49,7 +49,7 @@ const destroyData = async () => {
   }
 };
 
-if (process.argv[2] === "-d") {
+if (process.argv.splice(2)["-d"]) {
   destroyData();
 } else {
   importData();
