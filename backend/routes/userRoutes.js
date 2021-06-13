@@ -6,7 +6,7 @@ import {
   getUsers,
 } from "../controllers/userController.js";
 
-router.route("/").post(authUser).get(protect,getUsers)
+router.route("/").post(authUser).get(getUsers)
 
 export default router;
 

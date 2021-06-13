@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import path from "path";
 import fs from "fs";
 import expressfileupload from "express-fileupload";
 import multer from "multer";
@@ -11,18 +12,28 @@ import { KeyObject } from "crypto";
 import questionRoutes from "./routes/questionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-
+import uploadRoutes from "./routes/uploadRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleWare.js";
 
 dotenv.config();
 
 connectDB();
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const app = express();
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-// app.use(expressfileupload());
-// let upload = multer({ dest: "./" });
+app.use(express.urlencoded({ extended: true }));
+app.use(expressfileupload());
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "/views"));
+app.use(express.static(`${__dirname}/public`));
+
+const upload = multer({ dest: "public" });
+
+app.use("/", (req, res) => {
+  res.render("index");
+});
 
 // app.get("/", (req, res) => {
 //   res.send("Api is running");
@@ -31,6 +42,7 @@ app.use(express.json());
 app.use("/api/questions", questionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/upload", uploadRoutes);
 
 app.use(notFound);
 
