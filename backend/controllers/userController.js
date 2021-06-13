@@ -1,20 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import generateToken from "../utils/generateToken.js";
 
-
-//  @desc   admin login
-//  @route  POST /api/admin/login
-//  @access Private/Admin
-
-const adminLogin = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
-
-  const user = await User.findOne({ email });
-
-  if (user) {
-
-  }
-});
 
 //  @desc   register users
 //  @route  POST /api/users
@@ -44,14 +31,13 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-
 //  @desc   Get all users
 //  @route  POST /api/users
 //  @access Private/Admin
 
-const getUsers = asyncHandler(async (req,res) => {
-    const users = await User.find({})
-    res.join(users)
-})
+const getUsers = asyncHandler(async (req, res) => {
+  const users = await User.find({});
+  res.json(users);
+});
 
-export { authUser, adminLogin, getUsers };
+export { authUser,  getUsers };

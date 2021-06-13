@@ -10,6 +10,7 @@ import Category from "./models/categoriesModel.js";
 import { KeyObject } from "crypto";
 import questionRoutes from "./routes/questionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 
 import { notFound, errorHandler } from "./middleware/errorMiddleWare.js";
 
@@ -29,8 +30,7 @@ app.use(express.json());
 
 app.use("/api/questions", questionRoutes);
 app.use("/api/users", userRoutes);
-app.use("/api/admin", userRoutes);
-
+app.use("/api/admin", adminRoutes);
 
 app.use(notFound);
 

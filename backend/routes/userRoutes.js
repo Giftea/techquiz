@@ -3,12 +3,10 @@ import { protect, admin } from "../middleware/authMiddleWare.js";
 const router = express.Router();
 import {
   authUser,
-  adminLogin,
   getUsers,
 } from "../controllers/userController.js";
 
-router.post("/login", adminLogin);
-router.route("/").post(authUser).get(protect, getUsers);
+router.route("/").post(authUser).get(protect,getUsers)
 
 export default router;
 
