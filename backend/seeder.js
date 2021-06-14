@@ -21,11 +21,10 @@ const importData = async () => {
     const createdCategories = await Category.insertMany(categories);
     await User.insertMany(users);
 
-    const questions = data.map((quest) => {
-      return { ...quest, category: createdCategories[0]._id };
+    await Question.insertMany({
+      category: createdCategories[0]._id,
+      question: data,
     });
-
-    await Question.insertMany(questions);
 
     console.log("Questions imported");
     process.exit();

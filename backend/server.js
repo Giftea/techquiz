@@ -25,24 +25,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressfileupload());
 
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "/views"));
-app.use(express.static(`${__dirname}/public`));
 
-const upload = multer({ dest: "public" });
 
-app.use("/", (req, res) => {
-  res.render("index");
+app.get("/", (req, res) => {
+  res.send("Api is running");
 });
-
-// app.get("/", (req, res) => {
-//   res.send("Api is running");
-// });
 
 app.use("/api/questions", questionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/upload", uploadRoutes);
+app.use("/api/uploads", uploadRoutes);
 
 app.use(notFound);
 
@@ -79,3 +71,6 @@ app.listen(PORT, console.log("server created by giiftea"));
 //     res.send("An error occurred uploading file");
 //   }
 // });
+
+
+
