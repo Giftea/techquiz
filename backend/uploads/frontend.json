@@ -1,9 +1,7 @@
 {
-  "questions": [
-    {
-      "question": "what is my proble?",
-      "options": [
-        {
+  "questions": [{
+      "question": "what is your problem?",
+      "options": [{
           "answer": "gift",
           "correct": true
         },
@@ -19,8 +17,7 @@
     },
     {
       "question": "what framework am i learning?",
-      "options": [
-        {
+      "options": [{
           "answer": "express",
           "correct": true
         },
@@ -40,8 +37,7 @@
     },
     {
       "question": "did i take a course on ui/ux in the past?",
-      "options": [
-        {
+      "options": [{
           "answer": "yes",
           "correct": true
         },

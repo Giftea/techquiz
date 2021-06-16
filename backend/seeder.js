@@ -15,16 +15,16 @@ connectDB();
 const importData = async () => {
   try {
     await User.deleteMany();
-    await Question.deleteMany();
-    await Category.deleteMany();
+    // await Question.deleteMany();
+    // await Category.deleteMany();
 
-    const createdCategories = await Category.insertMany(categories);
+    // const createdCategories = await Category.insertMany(categories);
     await User.insertMany(users);
 
-    await Question.insertMany({
-      category: createdCategories[0]._id,
-      question: data,
-    });
+    // await Question.insertMany({
+    //   category: createdCategories[0]._id,
+    //   questions: data,
+    // });
 
     console.log("Questions imported");
     process.exit();

@@ -6,26 +6,38 @@ import Category from "../models/categoriesModel.js";
 import fs from "fs";
 
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+
 //  @desc   Fetch all Questions
 //  @route  GET /api/questions
 //  @access Private
+
 const getQuestions = asyncHandler(async (req, res) => {
   const questions = await Question.find({});
-  res.json(questions);
+  res.send({
+    error:false,
+    data:questions
+  })
 });
+
 
 //  @desc   Fetch single Question
 //  @route  GET /api/question/:id
 //  @access Private
 
 const getQuestionById = asyncHandler(async (req, res) => {
-  const question = await Question.findById(req.params.id);
+  const question = await Question.find({category:req.params.id});
 
-  if (question) {
-    res.json(question);
+  if (question[0]) {
+    res.send({
+      error:false,
+      data: question
+    });
   } else {
-    res.status(404);
-    throw new Error("Question not found");
+    res.send({
+      error:true,
+      message: "No Question found with specified ID"
+    })
   }
 });
 
@@ -56,6 +68,10 @@ function checkFileType(req, res) {
   }
 }
 
+//  @desc   Upload Question JSON file
+//  @route  POST /api/question/
+//  @access Private
+
 const uploadQuestions = asyncHandler(async (req, res) => {
   const categories = await Category.find({});
   checkFileType(req, res);
@@ -68,25 +84,49 @@ const uploadQuestions = asyncHandler(async (req, res) => {
     return fileName == item.name.toLowerCase();
   });
   fs.readFile(`./backend/uploads/${file}`, "utf8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    updateId = selectedQuestionId[0]._id;
-    newQuestion = JSON.parse(data);
+    try{
+      if (err) {
+        console.error(err);
+        throw "An Error Occurred reading file";
+      }
+  
+      updateId = selectedQuestionId[0]._id;
+      newQuestion = JSON.parse(data);
+  
+      res.send({
+        error: false,
+        data: {
+          categoryId: updateId,
+          questions: newQuestion.questions,
+        },
+      });
 
-    res.send({
-      error: false,
-      data: {
-        categoryId: updateId,
-        questions: newQuestion.questions,
-      },
-    });
+    }catch(error){
+      res.send({
+          error: true,
+          message: error,
+      });
+    }
   });
 });
 
-const updateQuestions = asyncHandler(async (req, res) => {
-  
+
+//  @desc   Upload Question extract from JSON
+//  @route  POST /api/question/uploads/data
+//  @access Private
+const upsertQuestions = asyncHandler(async (req, res) => {
+  const categoryID = req.body.data.categoryId;
+  const newQuestions = req.body.data.questions;
+
+  let upsertRequest = await Question.updateOne(
+    { category: categoryID },
+    { $set: {questions : newQuestions} },
+    { upsert:true }
+    );
+  res.send({
+    error: false,
+    data: "Questions Uploaded",
+  });
 });
 
-export { getQuestionById, getQuestions, uploadQuestions, updateQuestions };
+export { getQuestionById, getQuestions, uploadQuestions, upsertQuestions };

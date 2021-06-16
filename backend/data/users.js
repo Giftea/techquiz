@@ -7,7 +7,7 @@ const users = [
     email: "admin@eg.com",
     phoneNumber: 123334,
     gender: "female",
-    password: bcrypt.hashSync('123456', 10),
+    password: bcrypt.hashSync("123456", 10),
     isAdmin: true,
   },
   {
@@ -15,14 +15,19 @@ const users = [
     email: "user1@eg.com",
     phoneNumber: 123344,
     gender: "female",
-    password: bcrypt.hashSync('123456', 10),
+    password: bcrypt.hashSync("123456", 10),
   },
   {
     fullName: "BE  user",
     email: "user2@eg.com",
     phoneNumber: 125534,
     gender: "male",
-    password: bcrypt.hashSync('123456', 10),
+    password: bcrypt.hashSync("123456", 10),
+    // quizMetaData: {
+    //   category: "jjhdshd784hd",
+    //   score: 20,
+    //   timeFinished: 30,
+    // },
   },
 ];
 

@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema(
       unique: true,
     },
     phoneNumber: {
-      type: Number,
+      type: String,
       required: true,
     },
     gender: {
@@ -29,9 +29,26 @@ const userSchema = mongoose.Schema(
       required: true,
       default: false,
     },
+    isDoneWithQuiz:{
+      type: Boolean,
+      required: true,
+      default:false
+    },
+    quizMetaData: {
+      category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Category"
+      },
+      score: {
+        type : Number
+      },
+      timeFinished: {
+        type : Number
+      }
+    },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 

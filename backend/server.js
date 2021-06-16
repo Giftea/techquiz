@@ -12,7 +12,7 @@ import { KeyObject } from "crypto";
 import questionRoutes from "./routes/questionRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
-import uploadRoutes from "./routes/uploadRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleWare.js";
 
 dotenv.config();
@@ -34,7 +34,7 @@ app.get("/", (req, res) => {
 app.use("/api/questions", questionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/uploads", uploadRoutes);
+app.use("/api/category", categoryRoutes);
 
 app.use(notFound);
 
