@@ -1,3 +1,4 @@
+import { response } from "express";
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
 import generateToken from "../utils/generateToken.js";
@@ -71,12 +72,22 @@ const getUsers = asyncHandler(async (req, res) => {
     gender: true,
   };
 
-  const users = await User.find({}, projection);
+  try {
+    
+    await User.find({}, projection).then(response => {
+      res.send({
+        error: false,
+        data: response,
+      });
+    })
 
-  res.json({
-    error : false,
-    data : users
-  });
+  } catch (error) {
+    res.send({
+      error: true,
+      message: error,
+    });
+  }
+
 });
 
 
@@ -100,19 +111,29 @@ const getUsersDoneWithQuiz = asyncHandler(async (req, res) => {
     gender: true,
   };
 
-  const usersDone = await User.find(filter,projection);
-  if(usersDone.length === 0){
+  try {
+    
+    const usersDone = await User.find(filter,projection);
+    if(usersDone.length === 0){
+      res.send({
+        error: true,
+        message: "No user done with quiz",
+        data: usersDone
+      });
+    }else{
+      res.send({
+        error: false,
+        data: usersDone,
+      });
+    }
+
+  } catch (error) {
     res.send({
-      error: false,
-      message: "No user done with quiz",
-      data: usersDone
-    });
-  }else{
-    res.send({
-      error: false,
-      data: usersDone,
+      error: true,
+      data: error,
     });
   }
+
 });
 
 
@@ -123,42 +144,53 @@ const getUsersDoneWithQuiz = asyncHandler(async (req, res) => {
 
 const setQuizMetaData = asyncHandler(async (req, res) => {
 
-  const {
-    _id,
-    category,
-    score,
-    timeFinished
-  } = req.body;
-
-  if( _id == undefined || category == undefined || score == undefined ||timeFinished == undefined){
+  try{
+    
+    const {
+      _id,
+      category,
+      score,
+      timeFinished
+    } = req.body;
+  
+    if( _id == undefined || category == undefined || score == undefined ||timeFinished == undefined){
+        res.send({
+          error:true,
+          message:"Incorrect Meta Data Sent (a field might be missing)"
+        })
+    }else{
+  
+      let newUpdates = {
+        isDoneWithQuiz: true,
+        quizMetaData: {
+          category,
+          score,
+          timeFinished
+        }
+      };
+        
+      const metaDataUpdate = await User.updateOne(
+        {
+          _id,
+          isDoneWithQuiz:false
+        },
+        { $set: newUpdates },
+        { upsert: false }
+      );
+        
+        
       res.send({
-        error:true,
-        message:"Incorrect Meta Data Sent (a field might be missing)"
-      })
-  }else{
+        error : false,
+        message : "Quiz ended"
+      });
+  
+    }
 
-    let newUpdates = {
-      isDoneWithQuiz: true,
-      quizMetaData: {
-        category,
-        score,
-        timeFinished
-      }
-    };
-      
-    const metaDataUpdate = await User.updateOne(
-      {
-        _id,
-        isDoneWithQuiz:false
-      },
-      { $set: newUpdates },
-      { upsert: false }
-    );
-      
-      
+  }catch(error){
+    
     res.send({
-      error : false,
-      message : "Quiz ended"
+      error: true,
+      message: error,
     });
 
   }
