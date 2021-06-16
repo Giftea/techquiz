@@ -5,8 +5,23 @@ import Category from "../models/categoriesModel.js";
 //  @route  GET /api/categories
 //  @access Private
 const getCategories = asyncHandler(async (req, res) => {
-  const categories = await Category.find({});
-  res.json(categories);
+
+  try {
+
+    await Category.find({}).then(list => {
+      res.send({
+        error: false,
+        data: list
+      })
+    })
+    
+  } catch (error) {
+    res.send({
+      error: true,
+      message: "No available category",
+    });
+  }
+
 });
 
 

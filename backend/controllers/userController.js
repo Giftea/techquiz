@@ -12,8 +12,7 @@ const authUser = asyncHandler(async (req, res) => {
 
   try {
 
-    const findUser = User.findOne({ email });
-    findUser.then(async response => {
+    await User.findOne({ email }).then(async response => {
       if(response != null){
         res.send({
           error: true,
