@@ -8,29 +8,57 @@ import generateToken from "../utils/generateToken.js";
 //  @access Public
 const authUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, phoneNumber, gender } = req.body;
-  const user = await User.create({
-    fullName,
-    email,
-    phoneNumber,
-    gender,
-    password,
-  });
+  const findUser = User.findOne({ email });
+  findUser.then(async response => {
+    if(response != null){
+      res.send({
+        error: true,
+        message: "Account already exist"
+      })
+    }else{
+      const createUser = await User.create({
+        fullName,
+        email,
+        phoneNumber,
+        gender,
+        password,
+      }).then(result => {
+        res.send({
+          error: false,
+          message: "Account Created",
+          data: {
+            _id: result._id,
+            name: result.name,
+            email: result.email,
+            phoneNumber: result.phoneNumber,
+            gender: result.gender,
+          },
+        });
+      }).catch(error => {
+        res.send({
+          error: false,
+          message: "An error occurred creating account",
+        });
+      })
 
-  if (user) {
-    res.status(201).json({
-      error: false,
-      data: {
-        _id: user._id,
-        name: user.name,
-        email: user.email,
-        phoneNumber: user.phoneNumber,
-        gender: user.gender
-      }
-    });
-  } else {
-    res.status(400);
-    throw new Error("Invalid User data");
-  }
+    }
+  })
+
+  // if (user) {
+  //   res.status(201).json({
+  //     error: false,
+  //     data: {
+  //       _id: user._id,
+  //       name: user.name,
+  //       email: user.email,
+  //       phoneNumber: user.phoneNumber,
+  //       gender: user.gender
+  //     }
+  //   });
+  // } else {
+  //   res.status(400);
+  //   throw new Error("Invalid User data");
+  // }
 });
 
 //  @desc   Get all users
