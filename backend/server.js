@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import path from "path";
+import cors from "cors";
 import fs from "fs";
 import expressfileupload from "express-fileupload";
 import multer from "multer";
@@ -24,6 +25,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressfileupload());
+app.use('*', cors())
 
 
 
