@@ -26,4 +26,31 @@ const adminLogin = asyncHandler(async (req, res) => {
   }
 });
 
-export { adminLogin };
+//  @desc   admin wipe user data
+//  @route  PURGE /api/admin/:wipe
+//  @access Private/Admin
+
+const wipeUserData = asyncHandler(async (req, res) => {
+
+  const { wipe } = req.params;
+
+  if(wipe == "user"){
+
+    await User.deleteMany();
+    res.send({
+      error: false,
+      message: "User data cleared"
+    })
+
+  }else{
+
+    res.send({
+      error: true,
+      message: "Cannot process request" 
+    })
+
+  }
+
+});
+
+export { adminLogin, wipeUserData};

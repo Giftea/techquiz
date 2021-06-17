@@ -72,10 +72,18 @@ const getUsers = asyncHandler(async (req, res) => {
   try {
     
     await User.find({}, projection).then(response => {
-      res.send({
-        error: false,
-        data: response,
-      });
+      
+      if(response.length != 0){
+        res.send({
+          error: false,
+          data: response,
+        });
+      }else{
+        res.send({
+          error: true,
+          message: "users list not available",
+        });
+      }
     })
 
   } catch (error) {
