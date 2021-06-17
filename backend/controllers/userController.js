@@ -25,9 +25,7 @@ const authUser = asyncHandler(async (req, res) => {
           phoneNumber,
           gender,
           password,
-        })
-        
-        createUser.then(result => {
+        }).then(result => {
           res.send({
             error: false,
             message: "Account Created",
