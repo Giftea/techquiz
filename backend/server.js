@@ -22,10 +22,13 @@ connectDB();
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const app = express();
+app.use('*', cors({
+  origin: "*",
+  methods: ['GET','POST','PUT','PATCH','DELETE','HEAD']
+}))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(expressfileupload());
-app.use('*', cors())
 
 
 

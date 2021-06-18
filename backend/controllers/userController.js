@@ -10,6 +10,7 @@ import generateToken from "../utils/generateToken.js";
 const authUser = asyncHandler(async (req, res) => {
   const { fullName, email, password, phoneNumber, gender } = req.body;
 
+  
   try {
 
     await User.findOne({ email }).then(async response => {
