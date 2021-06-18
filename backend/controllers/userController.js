@@ -119,7 +119,7 @@ const getUsersDoneWithQuiz = asyncHandler(async (req, res) => {
 
   try {
     
-    const usersDone = await User.find(filter,projection).sort({"quizMetaData.score": -1});
+    const usersDone = await User.find(filter,projection).sort({"quizMetaData.score": 1});
     if(usersDone.length === 0){
       res.send({
         error: true,
