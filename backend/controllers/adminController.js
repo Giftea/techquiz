@@ -10,19 +10,32 @@ const adminLogin = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (user && (await user.matchPassword(password))) {
-    res.json({
-      _id: user._id,
-      name: user.name,
-      email: user.email,
-      phoneNumber: user.phoneNumber,
-      gender: user.gender,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id),
+  let isUserPassword = await user.matchPassword(password).then(isPassword => {
+    return isPassword;
+  })
+
+  if (user.isAdmin && isUserPassword) {
+
+    res.send({
+      error: false,
+      data: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        gender: user.gender,
+        isAdmin: user.isAdmin,
+        token: generateToken(user._id)
+      }
     });
+
   } else {
-    res.status(401);
-    throw new Error("Invalid email or password");
+
+    res.send({
+      error: true,
+      message: "Invalid email or password"
+    });
+
   }
 });
 
