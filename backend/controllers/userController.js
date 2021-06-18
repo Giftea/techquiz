@@ -119,7 +119,7 @@ const getUsersDoneWithQuiz = asyncHandler(async (req, res) => {
 
   try {
     
-    const usersDone = await User.find(filter,projection);
+    const usersDone = await User.find(filter,projection).sort({"quizMetaData.score": 1});
     if(usersDone.length === 0){
       res.send({
         error: true,
@@ -204,4 +204,30 @@ const setQuizMetaData = asyncHandler(async (req, res) => {
 
 });
 
-export { authUser, getUsers, getUsersDoneWithQuiz, setQuizMetaData };
+
+
+//  @desc   Delete all users
+//  @route  DELETE /api/users
+//  @access Private/Admin
+
+const deleteAllUsers = asyncHandler(async (req, res) => {
+
+  try {
+
+    await User.deleteMany({});
+
+    res.send({
+      error: false,
+      message: "User list deleted"
+    })
+    
+  } catch (error) {
+    res.send({
+      error: true,
+      message: "An error occurred while deleting users",
+    });
+  }
+
+});
+
+export { authUser, getUsers, getUsersDoneWithQuiz, setQuizMetaData, deleteAllUsers };
